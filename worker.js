@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 
 var amqp = require('amqplib/callback_api');
-const exec = require('child_process').exec;
 
-amqp.connect('amqp://localhost', function(error0, connection) {
+amqp.connect('amqp://localhost:10001', function(error0, connection) {
   if (error0) {
     throw error0;
   }
@@ -24,9 +23,6 @@ amqp.connect('amqp://localhost', function(error0, connection) {
       console.log(" [x] Received %s", instanceId);
       // create container
       console.log("Creating container")
-      exec("docker ps", function(err, stdout, stderr) {
-        console.log(stdout);
-      })
       channel.ack(msg);
     }, {
       // manual acknowledgment mode,
