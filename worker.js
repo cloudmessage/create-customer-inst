@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 
 var amqp = require('amqplib/callback_api');
+const randomstring = require('randomstring')
 
-function getRandomString() {
-  const randomstring = require('randomstring')
-
+function getRandomUsernameAndVhost() {
   const generatedString = randomstring.generate({
     length: 8,
     charset: 'alphabetic',
@@ -15,9 +14,10 @@ function getRandomString() {
 }
 
 function generatePassword() {
-  const { v4: uuidv4 } = require('uuid')
+  // using default 32 length, alphanumeric
+  const generatedString = randomstring.generate()
 
-  return uuidv4()
+  return generatedString
 }
 
 amqp.connect('amqp://localhost:10001', function(error0, connection) {
@@ -40,7 +40,7 @@ amqp.connect('amqp://localhost:10001', function(error0, connection) {
 
       console.log(" [x] Received %s", instanceId);
 
-      const randomString = getRandomString()
+      const randomString = getRandomUsernameAndVhost()
       const password = generatePassword()
       console.log("random-string=", randomString, "password=", password)
       // create container
