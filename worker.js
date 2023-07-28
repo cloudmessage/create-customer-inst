@@ -14,6 +14,12 @@ function getRandomString() {
   return generatedString
 }
 
+function generatePassword() {
+  const { v4: uuidv4 } = require('uuid')
+
+  return uuidv4()
+}
+
 amqp.connect('amqp://localhost:10001', function(error0, connection) {
   if (error0) {
     throw error0;
@@ -35,7 +41,8 @@ amqp.connect('amqp://localhost:10001', function(error0, connection) {
       console.log(" [x] Received %s", instanceId);
 
       const randomString = getRandomString()
-      console.log("random-string=", randomString)
+      const password = generatePassword()
+      console.log("random-string=", randomString, "password=", password)
       // create container
       console.log("Creating container")
       channel.ack(msg);
