@@ -2,6 +2,18 @@
 
 var amqp = require('amqplib/callback_api');
 
+function getRandomString() {
+  const randomstring = require('randomstring')
+
+  const generatedString = randomstring.generate({
+    length: 8,
+    charset: 'alphabetic',
+    capitalization: 'lowercase'
+  })
+
+  return generatedString
+}
+
 amqp.connect('amqp://localhost:10001', function(error0, connection) {
   if (error0) {
     throw error0;
@@ -21,6 +33,9 @@ amqp.connect('amqp://localhost:10001', function(error0, connection) {
       var instanceId = msg.content.toString();
 
       console.log(" [x] Received %s", instanceId);
+
+      const randomString = getRandomString()
+      console.log("random-string=", randomString)
       // create container
       console.log("Creating container")
       channel.ack(msg);
