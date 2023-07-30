@@ -14,8 +14,10 @@ function getRandomUsernameAndVhost() {
 }
 
 function generatePassword() {
-  // using default 32 length, alphanumeric
-  const generatedString = randomstring.generate()
+  const generatedString = randomstring.generate({
+    length: 32,
+    charset: 'alphanumeric'
+  })
 
   return generatedString
 }
@@ -43,8 +45,8 @@ amqp.connect('amqp://localhost:10001', function(error0, connection) {
       const randomString = getRandomUsernameAndVhost()
       const password = generatePassword()
       console.log("random-string=", randomString, "password=", password)
-      // create container
-      console.log("Creating container")
+      // TODO: create vhost and user
+      console.log("Creating vhost and user")
       channel.ack(msg);
     }, {
       // manual acknowledgment mode,
