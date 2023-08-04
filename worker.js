@@ -38,7 +38,7 @@ amqp.connect('amqp://localhost:10001', function(error0, connection) {
     });
     channel.prefetch(1);
     console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
-    channel.consume(queue, function(msg) {
+    channel.consume(queue, async function(msg) {
       var instanceId = msg.content.toString();
 
       console.log(" [x] Received %s", instanceId);
@@ -58,32 +58,43 @@ amqp.connect('amqp://localhost:10001', function(error0, connection) {
       }
 
       // creating vhost
-      axios.put(
-        'http://localhost:15672/api/vhosts/' + randomString,
-        null,
-        config
-      )
-      .then(() => {
+      try {
+        await axios.put(
+          'http://localhost:15672/api/vhosts/' + randomString,
+          null,
+          config
+        )
         console.log(`host ${randomString} created`)
-      })
-      .catch((err) => {
-        console.log("host create error: ", err)
+      } catch(err) {
+        console.log("host create error: ", err.message)
         throw err
-      })
+      }
 
       // creating user
-      axios.put(
-        'http://localhost:15672/api/users/' + randomString,
-        {"password": password, "tags": "customer"},
-        config
-      )
-      .then(() => {
+      try {
+        await axios.put(
+          'http://localhost:15672/api/users/' + randomString,
+          {"password": password, "tags": "customer"},
+          config
+        )
         console.log(`user ${randomString} created`)
-      })
-      .catch((err) => {
-        console.log("user create error: ", err)
+      } catch(err) {
+        console.log("user create error: ", err.message)
         throw err
-      })
+      }
+
+      // grant permissions to user for vhost
+      try {
+        await axios.put(
+          `http://localhost:15672/api/permissions/${randomString}/${randomString}`,
+          {"configure": ".*", "write": ".*", "read": ".*"},
+          config
+        )
+        console.log(`permissions granted to user ${randomString} on vhost ${randomString}`)
+      } catch(err) {
+        console.log("permissions grant error: ", err.message)
+        throw err
+      }
 
       channel.ack(msg);
     }, {
