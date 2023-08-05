@@ -4,6 +4,15 @@ var amqp = require('amqplib/callback_api');
 const axios = require('axios')
 const randomstring = require('randomstring')
 
+const knexOptions = {
+  client: 'sqlite3',
+  connection: {
+    filename: '../cloudmessage-backend/mydb.sqlite'
+  }
+}
+
+const knex = require('knex')(knexOptions)
+
 function getRandomUsernameAndVhost() {
   const generatedString = randomstring.generate({
     length: 8,
@@ -95,6 +104,17 @@ amqp.connect('amqp://localhost:10001', function(error0, connection) {
         console.log("permissions grant error: ", err.message)
         throw err
       }
+
+      // update database with instance information
+      knex('instances')
+        .where('id', instanceId)
+        .update({
+          user: randomString,
+          virtual_host: randomString,
+          password,
+          hostname: 'localhost'
+        })
+        .catch((err) => { console.log(err); throw err })
 
       channel.ack(msg);
     }, {
