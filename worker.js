@@ -1,15 +1,11 @@
 #!/usr/bin/env node
 
 var amqp = require('amqplib/callback_api');
-const axios = require('axios')
-const randomstring = require('randomstring')
+const axios = require('axios');
+const randomstring = require('randomstring');
+const knexOptionsFile = require('./knexoptions');
 
-const knexOptions = {
-  client: 'sqlite3',
-  connection: {
-    filename: '../cloudmessage-backend/mydb.sqlite'
-  }
-}
+const knexOptions = knexOptionsFile[process.env.NODE_ENV];
 
 const knex = require('knex')(knexOptions)
 
