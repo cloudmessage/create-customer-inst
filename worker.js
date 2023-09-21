@@ -28,7 +28,7 @@ function generatePassword() {
   return generatedString
 }
 
-amqp.connect('amqp://localhost:10001', function(error0, connection) {
+amqp.connect(process.env.INSTANCE_MQ_URL, function(error0, connection) {
   if (error0) {
     throw error0;
   }
