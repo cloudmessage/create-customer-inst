@@ -5,6 +5,8 @@ const axios = require('axios');
 const randomstring = require('randomstring');
 const knexOptionsFile = require('./knexoptions');
 
+const CUSTOMER_CLUSTER_URL = process.env.CUSTOMER_CLUSTER_URL;
+
 const knexOptions = knexOptionsFile[process.env.NODE_ENV];
 
 const knex = require('knex')(knexOptions)
@@ -65,7 +67,7 @@ amqp.connect(process.env.INSTANCE_MQ_URL, function(error0, connection) {
       // creating vhost
       try {
         await axios.put(
-          'http://localhost:15672/api/vhosts/' + randomString,
+          `${CUSTOMER_CLUSTER_URL}/api/vhosts/` + randomString,
           null,
           config
         )
@@ -78,7 +80,7 @@ amqp.connect(process.env.INSTANCE_MQ_URL, function(error0, connection) {
       // creating user
       try {
         await axios.put(
-          'http://localhost:15672/api/users/' + randomString,
+          `${CUSTOMER_CLUSTER_URL}/api/users/` + randomString,
           {"password": password, "tags": "customer"},
           config
         )
@@ -91,7 +93,7 @@ amqp.connect(process.env.INSTANCE_MQ_URL, function(error0, connection) {
       // grant permissions to user for vhost
       try {
         await axios.put(
-          `http://localhost:15672/api/permissions/${randomString}/${randomString}`,
+          `${CUSTOMER_CLUSTER_URL}/api/permissions/${randomString}/${randomString}`,
           {"configure": ".*", "write": ".*", "read": ".*"},
           config
         )
