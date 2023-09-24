@@ -104,6 +104,9 @@ amqp.connect(process.env.INSTANCE_MQ_URL, function(error0, connection) {
         throw err
       }
 
+      const url = new URL(CUSTOMER_CLUSTER_URL);
+      const hostname = url.hostname;
+
       // update database with instance information
       knex('instances')
         .where('id', instanceId)
@@ -111,7 +114,7 @@ amqp.connect(process.env.INSTANCE_MQ_URL, function(error0, connection) {
           user: randomString,
           virtual_host: randomString,
           password,
-          hostname: 'localhost'
+          hostname
         })
         .catch((err) => { console.log(err); throw err })
 
