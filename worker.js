@@ -2,6 +2,7 @@
 
 var amqp = require('amqplib/callback_api');
 const axios = require('axios');
+require('dotenv').config();
 const randomstring = require('randomstring');
 const knexOptionsFile = require('./knexoptions');
 
