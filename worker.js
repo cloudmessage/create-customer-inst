@@ -68,7 +68,7 @@ amqp.connect(process.env.INSTANCE_MQ_URL, function(error0, connection) {
       // creating vhost
       try {
         await axios.put(
-          `${CUSTOMER_CLUSTER_URL}/api/vhosts/` + randomString,
+          `${CUSTOMER_CLUSTER_URL}:15672/api/vhosts/` + randomString,
           null,
           config
         )
@@ -81,7 +81,7 @@ amqp.connect(process.env.INSTANCE_MQ_URL, function(error0, connection) {
       // creating user
       try {
         await axios.put(
-          `${CUSTOMER_CLUSTER_URL}/api/users/` + randomString,
+          `${CUSTOMER_CLUSTER_URL}:15672/api/users/` + randomString,
           {"password": password, "tags": "customer"},
           config
         )
@@ -94,7 +94,7 @@ amqp.connect(process.env.INSTANCE_MQ_URL, function(error0, connection) {
       // grant permissions to user for vhost
       try {
         await axios.put(
-          `${CUSTOMER_CLUSTER_URL}/api/permissions/${randomString}/${randomString}`,
+          `${CUSTOMER_CLUSTER_URL}:15672/api/permissions/${randomString}/${randomString}`,
           {"configure": ".*", "write": ".*", "read": ".*"},
           config
         )
