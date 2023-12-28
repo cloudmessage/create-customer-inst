@@ -2,7 +2,7 @@ module.exports = {
   development: {
     client: 'sqlite3',
     connection: {
-      filename: "./mydb.sqlite"
+      filename: "../cloudmessage-backend/mydb.sqlite"
     },
     useNullAsDefault: true
   },
