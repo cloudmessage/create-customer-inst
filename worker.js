@@ -56,7 +56,7 @@ amqp.connect(process.env.INSTANCE_MQ_URL, function(error0, connection) {
 
       console.log("Creating vhost and user")
 
-      const managementCredentials = "guest:guest"
+      const managementCredentials = `${process.env.MANAGEMENT_USERNAME}:${process.env.MANAGEMENT_PASSWORD}`;
       const base64ManagementCredentials = Buffer.from(managementCredentials).toString("base64")
       const config = {
         headers: {
