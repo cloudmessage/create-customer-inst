@@ -1,16 +1,18 @@
 #!/usr/bin/env node
 
-var amqp = require('amqplib/callback_api');
-const axios = require('axios');
-require('dotenv').config();
-const randomstring = require('randomstring');
-const knexOptionsFile = require('./knexoptions');
+import * as amqplib from 'amqplib';
+import axios from 'axios';
+import dotenv from 'dotenv';
+import randomstring from 'randomstring';
+import knexEnvOptions from './knexoptions.js';
+import Knex from 'knex';
+
+dotenv.config();
 
 const CUSTOMER_CLUSTER_URL = process.env.CUSTOMER_CLUSTER_URL;
 
-const knexOptions = knexOptionsFile[process.env.NODE_ENV];
-
-const knex = require('knex')(knexOptions)
+const knexOptions = knexEnvOptions[process.env.NODE_ENV];
+const knex = Knex(knexOptions);
 
 function getRandomUsernameAndVhost() {
   const generatedString = randomstring.generate({
@@ -31,7 +33,7 @@ function generatePassword() {
   return generatedString
 }
 
-amqp.connect(process.env.INSTANCE_MQ_URL, function(error0, connection) {
+amqplib.connect(process.env.INSTANCE_MQ_URL, function(error0, connection) {
   if (error0) {
     throw error0;
   }
