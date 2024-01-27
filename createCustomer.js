@@ -3,9 +3,6 @@ import axios from 'axios';
 import knexEnvOptions from './knexoptions.js';
 import Knex from 'knex';
 
-const knexOptions = knexEnvOptions[process.env.NODE_ENV];
-
-
 function getRandomUsernameAndVhost() {
   const generatedString = randomstring.generate({
     length: 8,
@@ -25,7 +22,7 @@ function generatePassword() {
   return generatedString
 }
 
-const createCustomerVhostAndUser = function(msg) {
+const createCustomerVhostAndUser = function(channel, msg) {
   (async () => {
   const knexOptions = knexEnvOptions[process.env.NODE_ENV];
   const knex = Knex(knexOptions);
@@ -105,8 +102,5 @@ const createCustomerVhostAndUser = function(msg) {
 
 };
 
-const getCreateCustomerFunction = function(channel) {
-  return createCustomerVhostAndUser;
-}
-// export default { createCustomerVhostAndUser };
-export default { getCreateCustomerFunction };
+
+export default { createCustomerVhostAndUser };

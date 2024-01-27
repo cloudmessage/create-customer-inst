@@ -3,8 +3,7 @@
 import * as amqplib from 'amqplib';
 import dotenv from 'dotenv';
 import randomstring from 'randomstring';
-// import createCustomer from './createCustomer.js';
-import getCreateCustomer from './createCustomer.js';
+import createCustomer from './createCustomer.js';
 
 dotenv.config();
 
@@ -33,10 +32,11 @@ const channel = await conn.createChannel();
 await channel.assertQueue(queue, { durable: true });
 channel.prefetch(1);
 console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
-const createCustomerFunction = getCreateCustomer.getCreateCustomerFunction(channel);
-// const createCustomerFunction = createCustomer.createCustomerVhostAndUser(channel);
-channel.consume(queue,
-  createCustomerFunction,
+channel.consume(
+  queue,
+  (msg) => {
+    createCustomer.createCustomerVhostAndUser(channel, msg);
+  },
   {
     noAck: false
   }
