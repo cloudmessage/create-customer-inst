@@ -105,4 +105,8 @@ const createCustomerVhostAndUser = function(msg) {
 
 };
 
-export default { createCustomerVhostAndUser };
+const getCreateCustomerFunction = function(channel) {
+  return createCustomerVhostAndUser;
+}
+// export default { createCustomerVhostAndUser };
+export default { getCreateCustomerFunction };
