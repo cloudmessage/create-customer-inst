@@ -1,25 +1,6 @@
-import randomstring from 'randomstring';
 import axios from 'axios';
 import Data from './data.js';
-
-function getRandomUsernameAndVhost() {
-  const generatedString = randomstring.generate({
-    length: 8,
-    charset: 'alphabetic',
-    capitalization: 'lowercase'
-  })
-
-  return generatedString
-}
-
-function generatePassword() {
-  const generatedString = randomstring.generate({
-    length: 32,
-    charset: 'alphanumeric'
-  })
-
-  return generatedString
-}
+import { getRandomUsernameAndVhost, generatePassword } from './utils.js';
 
 const createCustomerVhostAndUser = function(channel, msg) {
   (async () => {
