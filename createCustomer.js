@@ -1,7 +1,6 @@
 import randomstring from 'randomstring';
 import axios from 'axios';
-import knexEnvOptions from './knexoptions.js';
-import Knex from 'knex';
+import Data from './data.js';
 
 function getRandomUsernameAndVhost() {
   const generatedString = randomstring.generate({
@@ -24,8 +23,6 @@ function generatePassword() {
 
 const createCustomerVhostAndUser = function(channel, msg) {
   (async () => {
-  const knexOptions = knexEnvOptions[process.env.NODE_ENV];
-  const knex = Knex(knexOptions);
   var instanceId = msg.content.toString();
 
   console.log(" [x] Received %s", instanceId);
@@ -87,15 +84,7 @@ const createCustomerVhostAndUser = function(channel, msg) {
   const hostname = url.hostname;
 
   // update database with instance information
-  knex('instances')
-    .where('id', instanceId)
-    .update({
-      user: randomString,
-      virtual_host: randomString,
-      password,
-      hostname
-    })
-    .catch((err) => { console.log(err); throw err })
+  Data.updateDatabase(instanceId, randomString, password, hostname);
 
   channel.ack(msg);
   })();
