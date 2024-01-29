@@ -4,7 +4,7 @@ import { getRandomUsernameAndVhost, generatePassword } from './utils.js';
 
 const createCustomerVhostAndUser = function(channel, msg) {
   (async () => {
-    var instanceId = msg.content.toString();
+    const instanceId = msg.content.toString();
 
     console.log(" [x] Received %s", instanceId);
 
