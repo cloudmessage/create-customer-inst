@@ -1,5 +1,5 @@
-import axios from 'axios';
 import Data from './data.js';
+import * as custClusterApi from './customerClusterApi.js';
 import { getRandomUsernameAndVhost, generatePassword } from './utils.js';
 
 const createCustomerVhostAndUser = function(channel, msg) {
@@ -13,53 +13,9 @@ const createCustomerVhostAndUser = function(channel, msg) {
 
   console.log("Creating vhost and user")
 
-  const managementCredentials = `${process.env.MANAGEMENT_USERNAME}:${process.env.MANAGEMENT_PASSWORD}`;
-  const base64ManagementCredentials = Buffer.from(managementCredentials).toString("base64")
-  const config = {
-    headers: {
-      "content-type": "application/json",
-      "Authorization": "Basic " + base64ManagementCredentials
-    }
-  }
-
-  // creating vhost
-  try {
-    await axios.put(
-      `${process.env.CUSTOMER_CLUSTER_URL}:15672/api/vhosts/` + randomString,
-      null,
-      config
-    )
-    console.log(`host ${randomString} created`)
-  } catch(err) {
-    console.log("host create error: ", err.message)
-    throw err
-  }
-
-  // creating user
-  try {
-    await axios.put(
-      `${process.env.CUSTOMER_CLUSTER_URL}:15672/api/users/` + randomString,
-      {"password": password, "tags": "customer"},
-      config
-    )
-    console.log(`user ${randomString} created`)
-  } catch(err) {
-    console.log("user create error: ", err.message)
-    throw err
-  }
-
-  // grant permissions to user for vhost
-  try {
-    await axios.put(
-      `${process.env.CUSTOMER_CLUSTER_URL}:15672/api/permissions/${randomString}/${randomString}`,
-      {"configure": ".*", "write": ".*", "read": ".*"},
-      config
-    )
-    console.log(`permissions granted to user ${randomString} on vhost ${randomString}`)
-  } catch(err) {
-    console.log("permissions grant error: ", err.message)
-    throw err
-  }
+  await custClusterApi.createVhost(randomString);
+  await custClusterApi.createUser(randomString, password);
+  await custClusterApi.grantPermissions(randomString);
 
   const url = new URL(process.env.CUSTOMER_CLUSTER_URL);
   const hostname = url.hostname;
@@ -71,6 +27,5 @@ const createCustomerVhostAndUser = function(channel, msg) {
   })();
 
 };
-
 
 export default { createCustomerVhostAndUser };
