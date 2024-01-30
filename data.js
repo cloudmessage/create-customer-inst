@@ -1,8 +1,8 @@
-import knexEnvOptions from './knexoptions.js';
+import { getKnexEnvOptions } from './knexoptions.js';
 import Knex from 'knex';
 
 const updateDatabase = (instanceId, userAndVirtualHost, password, hostname) => {
-  const knexOptions = knexEnvOptions[process.env.NODE_ENV];
+  const knexOptions = getKnexEnvOptions(process.env.NODE_ENV, process.env.FILENAME_OR_DB_URL);
   const knex = Knex(knexOptions);
 
   knex('instances')
