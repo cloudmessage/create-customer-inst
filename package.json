@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node worker.js",
-    "dev:start-cust-rabbit-container": "docker run -d --hostname cust_rabbit_host --name cust_rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3-management"
+    "dev:start-cust-rabbit-container": "docker run -d --hostname cust_rabbit_host --name cust_rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3-management",
+    "test": "mocha"
   },
   "keywords": [],
   "author": "",
