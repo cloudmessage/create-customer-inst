@@ -16,5 +16,19 @@ describe('knexOptions', () => {
     const knexOptions = getKnexEnvOptions(env, fileNameOrUrl);
 
     expect(knexOptions).to.deep.equal(expectedObject);
-  })
+  });
+
+  it('returns expected object when env is production', () => {
+    const env = "production";
+    const fileNameOrUrl = "postgres://someurl.com";
+    const expectedObject = {
+      client: 'pg',
+      connection: fileNameOrUrl
+    };
+
+    const knexOptions = getKnexEnvOptions(env, fileNameOrUrl);
+
+    expect(knexOptions).to.deep.equal(expectedObject);
+  });
+
 })
