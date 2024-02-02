@@ -31,4 +31,11 @@ describe('knexOptions', () => {
     expect(knexOptions).to.deep.equal(expectedObject);
   });
 
+  it('throws an error when environment arg is not a valid env', async () => {
+    const env = "invalid-env";
+    const fileNameOrUrl = "does-not-matter";
+
+    expect(() => { getKnexEnvOptions(env, fileNameOrUrl) }).throw("Invalid value for environment");
+  });
+
 })
