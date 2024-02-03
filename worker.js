@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import createCustomer from './createCustomer.js';
 import { getKnexEnvOptions } from './knexoptions.js';
 import Knex from 'knex';
-import Data from './data.js';
+import Data from './Data.js';
 
 dotenv.config();
 
