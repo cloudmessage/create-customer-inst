@@ -22,6 +22,7 @@
   "devDependencies": {
     "chai": "^5.0.0",
     "mocha": "^10.2.0",
+    "sinon": "^17.0.1",
     "sqlite3": "^5.1.6"
   },
   "type": "module"
