@@ -7,7 +7,7 @@ import createCustomer from './createCustomer.js';
 import { getKnexEnvOptions } from './knexoptions.js';
 import Knex from 'knex';
 import Data from './Data.js';
-import CustomerClusterApi from './newCustomerClusterApi.js';
+import CustomerClusterApi from './CustomerClusterApi.js';
 
 dotenv.config();
 
