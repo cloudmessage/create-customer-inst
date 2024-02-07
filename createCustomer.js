@@ -1,5 +1,5 @@
 
-const createCustomerVhostAndUser = function(data, custClusterApi, utils, channel, msg) {
+const createCustomerVhostAndUser = function(data, custClusterApi, utils, custClusterUrl, channel, msg) {
   (async () => {
     const instanceId = msg.content.toString();
 
@@ -14,7 +14,7 @@ const createCustomerVhostAndUser = function(data, custClusterApi, utils, channel
     await custClusterApi.createUser(randomString, password);
     await custClusterApi.grantPermissions(randomString);
 
-    const url = new URL(process.env.CUSTOMER_CLUSTER_URL);
+    const url = new URL(custClusterUrl);
     const hostname = url.hostname;
 
     // update database with instance information
