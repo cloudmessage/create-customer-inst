@@ -1,4 +1,3 @@
-// import * as custClusterApi from './newCustomerClusterApi.js';
 import { getRandomUsernameAndVhost, generatePassword } from './utils.js';
 
 const createCustomerVhostAndUser = function(data, custClusterApi, channel, msg) {
