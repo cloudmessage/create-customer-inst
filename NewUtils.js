@@ -5,24 +5,24 @@ class Utils {
     this.randomstringLib = randomstringLib;
   }
 
-getRandomUsernameAndVhost() {
-  const generatedString = this.randomstringLib.generate({
-    length: 8,
-    charset: 'alphabetic',
-    capitalization: 'lowercase'
-  });
+  getRandomUsernameAndVhost() {
+    const generatedString = this.randomstringLib.generate({
+      length: 8,
+      charset: 'alphabetic',
+      capitalization: 'lowercase'
+    });
 
-  return generatedString;
-}
+    return generatedString;
+  }
 
-generatePassword() {
-  const generatedString = this.randomstringLib.generate({
-    length: 32,
-    charset: 'alphanumeric'
-  });
+  generatePassword() {
+    const generatedString = this.randomstringLib.generate({
+      length: 32,
+      charset: 'alphanumeric'
+    });
 
-  return generatedString;
-}
+    return generatedString;
+  }
 }
 
 export default Utils;
