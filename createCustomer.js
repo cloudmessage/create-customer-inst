@@ -1,7 +1,7 @@
-import * as custClusterApi from './newCustomerClusterApi.js';
+// import * as custClusterApi from './newCustomerClusterApi.js';
 import { getRandomUsernameAndVhost, generatePassword } from './utils.js';
 
-const createCustomerVhostAndUser = function(data, channel, msg) {
+const createCustomerVhostAndUser = function(data, custClusterApi, channel, msg) {
   (async () => {
     const instanceId = msg.content.toString();
 
