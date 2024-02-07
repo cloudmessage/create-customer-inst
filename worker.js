@@ -9,7 +9,7 @@ import { getKnexEnvOptions } from './knexoptions.js';
 import Knex from 'knex';
 import Data from './Data.js';
 import CustomerClusterApi from './CustomerClusterApi.js';
-import Utils from './NewUtils.js';
+import Utils from './Utils.js';
 
 dotenv.config();
 

@@ -1,4 +1,3 @@
-// import randomstring from 'randomstring';
 
 class Utils {
   constructor(randomstringLib) {
