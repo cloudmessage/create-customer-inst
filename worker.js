@@ -34,7 +34,7 @@ console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
 channel.consume(
   queue,
   (msg) => {
-    createCustomer.createCustomerVhostAndUser(data, api, utils, channel, msg);
+    createCustomer.createCustomerVhostAndUser(data, api, utils, process.env.CUSTOMER_CLUSTER_URL, channel, msg);
   },
   {
     noAck: false
