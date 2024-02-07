@@ -4,6 +4,10 @@ import Data from '../Data.js';
 
 describe('data, updateDatabase', () => {
 
+  beforeEach(() => {
+    sinon.restore();
+  });
+
   it('calls knex with expected argument and chained methods', () => {
     const whereMock = sinon.mock().returnsThis();
     const updateMock = sinon.mock().resolves([]);
