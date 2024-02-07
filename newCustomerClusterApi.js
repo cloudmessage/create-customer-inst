@@ -1,7 +1,14 @@
-import axios from 'axios';
+// import axios from 'axios';
+class CustomerClusterApi {
+  constructor(axios, managementUserName, managementPassword, custClusterUrl) {
+    this.axios = axios;
+    this.managementUserName = managementUserName;
+    this.managementPassword = managementPassword;
+    this.custClusterUrl = custClusterUrl;
+  }
 
-const getConfig = () => {
-  const managementCredentials = `${process.env.MANAGEMENT_USERNAME}:${process.env.MANAGEMENT_PASSWORD}`;
+getConfig() {
+  const managementCredentials = `${this.managementUserName}:${this.managementPassword}`;
   const base64ManagementCredentials = Buffer.from(managementCredentials).toString("base64")
   const config = {
     headers: {
@@ -13,12 +20,12 @@ const getConfig = () => {
   return config;
 }
 
-const createVhost = async (randomString) => {
+async createVhost(randomString) {
   try {
-    await axios.put(
-      `${process.env.CUSTOMER_CLUSTER_URL}:15672/api/vhosts/` + randomString,
+    await this.axios.put(
+      `${this.custClusterUrl}:15672/api/vhosts/` + randomString,
       null,
-      getConfig()
+      this.getConfig()
     )
     console.log(`host ${randomString} created`)
   } catch(err) {
@@ -27,12 +34,12 @@ const createVhost = async (randomString) => {
   }
 }
 
-const createUser = async (randomString, password) => {
+async createUser(randomString, password) {
   try {
-    await axios.put(
-      `${process.env.CUSTOMER_CLUSTER_URL}:15672/api/users/` + randomString,
+    await this.axios.put(
+      `${this.custClusterUrl}:15672/api/users/` + randomString,
       {"password": password, "tags": "customer"},
-      getConfig()
+      this.getConfig()
     )
     console.log(`user ${randomString} created`)
   } catch(err) {
@@ -41,13 +48,13 @@ const createUser = async (randomString, password) => {
   }
 }
 
-const grantPermissions = async (randomString) => {
+async grantPermissions(randomString) {
   // grant permissions to user for vhost
   try {
-    await axios.put(
-      `${process.env.CUSTOMER_CLUSTER_URL}:15672/api/permissions/${randomString}/${randomString}`,
+    await this.axios.put(
+      `${this.custClusterUrl}:15672/api/permissions/${randomString}/${randomString}`,
       {"configure": ".*", "write": ".*", "read": ".*"},
-      getConfig()
+      this.getConfig()
     )
     console.log(`permissions granted to user ${randomString} on vhost ${randomString}`)
   } catch(err) {
@@ -55,5 +62,6 @@ const grantPermissions = async (randomString) => {
     throw err
   }
 }
+}
 
-export { createVhost, createUser, grantPermissions };
+export default CustomerClusterApi;
