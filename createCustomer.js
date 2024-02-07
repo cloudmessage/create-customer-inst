@@ -1,4 +1,4 @@
-import { getRandomUsernameAndVhost, generatePassword } from './utils.js';
+import { getRandomUsernameAndVhost, generatePassword } from './NewUtils.js';
 
 const createCustomerVhostAndUser = function(data, custClusterApi, channel, msg) {
   (async () => {
