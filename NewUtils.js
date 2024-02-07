@@ -1,7 +1,12 @@
-import randomstring from 'randomstring';
+// import randomstring from 'randomstring';
 
-const getRandomUsernameAndVhost = () => {
-  const generatedString = randomstring.generate({
+class Utils {
+  constructor(randomstringLib) {
+    this.randomstringLib = randomstringLib;
+  }
+
+getRandomUsernameAndVhost() {
+  const generatedString = this.randomstringLib.generate({
     length: 8,
     charset: 'alphabetic',
     capitalization: 'lowercase'
@@ -10,13 +15,14 @@ const getRandomUsernameAndVhost = () => {
   return generatedString;
 }
 
-const generatePassword = () => {
-  const generatedString = randomstring.generate({
+generatePassword() {
+  const generatedString = this.randomstringLib.generate({
     length: 32,
     charset: 'alphanumeric'
   });
 
   return generatedString;
 }
+}
 
-export { getRandomUsernameAndVhost, generatePassword };
+export default Utils;

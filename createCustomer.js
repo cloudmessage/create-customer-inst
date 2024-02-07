@@ -1,13 +1,13 @@
-import { getRandomUsernameAndVhost, generatePassword } from './NewUtils.js';
+// import { getRandomUsernameAndVhost, generatePassword } from './NewUtils.js';
 
-const createCustomerVhostAndUser = function(data, custClusterApi, channel, msg) {
+const createCustomerVhostAndUser = function(data, custClusterApi, utils, channel, msg) {
   (async () => {
     const instanceId = msg.content.toString();
 
     console.log(" [x] Received %s", instanceId);
 
-    const randomString = getRandomUsernameAndVhost()
-    const password = generatePassword()
+    const randomString = utils.getRandomUsernameAndVhost()
+    const password = utils.generatePassword()
 
     console.log("Creating vhost and user")
 
