@@ -30,19 +30,18 @@ describe('CustomerClusterApi', () => {
     const managementCredentials = "mgmtDummyUsername:mgmtDummyPassword";
     const base64ManagementCredentials = Buffer.from(managementCredentials).toString("base64");
 
-    const expectedArgs = {
-      arg1: "http://dummy-url.com:15672/api/vhosts/myhostname",
-      arg2: null,
-      arg3: { headers: {
-          "content-type": "application/json",
-          "Authorization": "Basic " + base64ManagementCredentials
-        }
+    const expectedArg1 = "http://dummy-url.com:15672/api/vhosts/myhostname";
+    const expectedArg2 = null;
+    const expectedArg3 = {
+      headers: {
+        "content-type": "application/json",
+        "Authorization": "Basic " + base64ManagementCredentials
       }
-    }
+    };
 
     api.createVhost("myhostname");
 
-    expect(putMock).to.be.calledWith(expectedArgs.arg1, expectedArgs.arg2, expectedArgs.arg3);
+    expect(putMock).to.be.calledWith(expectedArg1, expectedArg2, expectedArg3);
   });
 
 })
