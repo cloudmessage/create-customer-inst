@@ -1,18 +1,10 @@
 import * as chai from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import createCustomer from '../createCustomer.js';
+import { createCustomerFunction } from '../createCustomerFunction.js';
 
 chai.use(sinonChai);
 const { expect } = chai;
-
-//
-// TODO: This test does not work yet.
-//       the unit under test "createCustomer" uses IIFE inside its function.
-//       There are "await" directives inside the IIFE. Need to figure out
-//       how to make mocha wait for these async calls. 
-//
-
 
 describe('createCustomer', () => {
 
@@ -20,7 +12,7 @@ describe('createCustomer', () => {
     sinon.restore();
   });
 
-  it.skip('calls axios put with vhosts api call with the passed vhost name appended to url', async () => {
+  it('calls axios put with vhosts api call with the passed vhost name appended to url', async () => {
 
     //
     // arrange
@@ -37,9 +29,9 @@ describe('createCustomer', () => {
     const mockCreateUser = sinon.stub();
     const mockGrantPermissions = sinon.stub();
     const mockApi = {
-      createVhost: async() => { mockCreateVhost },
-      createUser: async() => { mockCreateUser() },
-      grantPermissions: async() => { mockGrantPermissions() }
+      createVhost: mockCreateVhost,
+      createUser: mockCreateUser,
+      grantPermissions: mockGrantPermissions
     }
 
     // mock utils
@@ -51,7 +43,7 @@ describe('createCustomer', () => {
     }
 
     // supply customer cust url
-    const custClusterUrl = "https://dummy-url.com";
+    const custClusterUrl = "https://dummy-url.com/xyz/abc";
 
     // mock channel
     const mockAck = sinon.stub();
@@ -71,7 +63,7 @@ describe('createCustomer', () => {
 
     // make call to createCustomer.createCustomerVhostAndUser
     
-    createCustomer.createCustomerVhostAndUser(
+    await createCustomerFunction(
       mockData,
       mockApi,
       mockUtils,
@@ -90,6 +82,7 @@ describe('createCustomer', () => {
     expect(mockCreateVhost).to.be.calledWith("myUserAndHost");
     expect(mockCreateUser).to.be.calledWith("myUserAndHost", "secret-password");
     expect(mockGrantPermissions).to.be.calledWith("myUserAndHost");
+    expect(mockUpdateDatabase).to.be.calledWith("12345", "myUserAndHost", "secret-password", "dummy-url.com");
   });
 
 })
