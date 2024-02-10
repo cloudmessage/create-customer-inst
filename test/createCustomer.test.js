@@ -6,6 +6,14 @@ import createCustomer from '../createCustomer.js';
 chai.use(sinonChai);
 const { expect } = chai;
 
+//
+// TODO: This test does not work yet.
+//       the unit under test "createCustomer" uses IIFE inside its function.
+//       There are "await" directives inside the IIFE. Need to figure out
+//       how to make mocha wait for these async calls. 
+//
+
+
 describe('createCustomer', () => {
 
   beforeEach(() => {
