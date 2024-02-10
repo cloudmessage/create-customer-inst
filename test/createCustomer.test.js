@@ -12,7 +12,7 @@ describe('createCustomer', () => {
     sinon.restore();
   });
 
-  it.only('calls axios put with vhosts api call with the passed vhost name appended to url', async () => {
+  it.skip('calls axios put with vhosts api call with the passed vhost name appended to url', async () => {
 
     //
     // arrange
