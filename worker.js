@@ -4,12 +4,13 @@ import * as amqplib from 'amqplib';
 import axios from 'axios';
 import randomstring from 'randomstring';
 import dotenv from 'dotenv';
-import createCustomer from './createCustomer.js';
 import { getKnexEnvOptions } from './knexoptions.js';
 import Knex from 'knex';
 import Data from './Data.js';
 import CustomerClusterApi from './CustomerClusterApi.js';
 import Utils from './Utils.js';
+import { createCustomerFunction } from './createCustomerFunction.js';
+import createCustomer from './createCustomer.js';
 
 dotenv.config();
 
@@ -34,7 +35,14 @@ console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
 channel.consume(
   queue,
   (msg) => {
-    createCustomer.createCustomerVhostAndUser(data, api, utils, process.env.CUSTOMER_CLUSTER_URL, channel, msg);
+    createCustomer.createCustomerVhostAndUser(
+      createCustomerFunction,
+      data,
+      api,
+      utils,
+      process.env.CUSTOMER_CLUSTER_URL,
+      channel,
+      msg);
   },
   {
     noAck: false
