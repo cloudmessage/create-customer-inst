@@ -1,5 +1,5 @@
 
-const createCustomerVhostAndUser = function(createCustomerFunction, data, custClusterApi, utils, custClusterUrl, channel, msg) {
+const createCustomerVhostAndUser = (createCustomerFunction, data, custClusterApi, utils, custClusterUrl, channel, msg) => {
   (async () => {
     await createCustomerFunction(
       data,
