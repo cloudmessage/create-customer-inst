@@ -43,7 +43,7 @@ describe('createCustomer', () => {
     }
 
     // supply customer cust url
-    const custClusterUrl = "https://dummy-url.com";
+    const custClusterUrl = "https://dummy-url.com/xyz/abc";
 
     // mock channel
     const mockAck = sinon.stub();
@@ -82,6 +82,7 @@ describe('createCustomer', () => {
     expect(mockCreateVhost).to.be.calledWith("myUserAndHost");
     expect(mockCreateUser).to.be.calledWith("myUserAndHost", "secret-password");
     expect(mockGrantPermissions).to.be.calledWith("myUserAndHost");
+    expect(mockUpdateDatabase).to.be.calledWith("12345", "myUserAndHost", "secret-password", "dummy-url.com");
   });
 
 })
