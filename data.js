@@ -5,7 +5,7 @@ class Data {
   }
 
   updateDatabase(instanceId, userAndVirtualHost, password, hostname) {
-    this.knex('instances')
+    this.knex(process.env.INSTANCES_TABLE_NAME)
     .where('id', instanceId)
     .update({
       user: userAndVirtualHost,
