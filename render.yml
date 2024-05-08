@@ -1,5 +1,0 @@
-services:
-  - name: create-cust-inst
-    private: true
-    env: node
-    port: 5672

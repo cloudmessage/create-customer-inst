@@ -4,5 +4,4 @@ WORKDIR /app
 COPY package.json .
 RUN npm install --legacy-peer-deps
 COPY * .
-EXPOSE 5672
 CMD ["node", "worker.js"]
