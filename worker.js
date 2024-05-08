@@ -12,8 +12,6 @@ import Utils from './Utils.js';
 import { createCustomerFunction } from './createCustomerFunction.js';
 import createCustomer from './createCustomer.js';
 
-const port = process.env.PORT || 5672;
-
 dotenv.config();
 
 const knexOptions = getKnexEnvOptions(process.env.NODE_ENV, process.env.FILENAME_OR_DB_URL);
