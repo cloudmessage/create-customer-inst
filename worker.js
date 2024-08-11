@@ -14,7 +14,7 @@ import createCustomer from './createCustomer.js';
 
 dotenv.config();
 
-const knexOptions = getKnexEnvOptions(process.env.NODE_ENV, process.env.FILENAME_OR_DB_URL);
+const knexOptions = getKnexEnvOptions(process.env.NODE_ENV, process.env.DB_URL);
 const knex = Knex(knexOptions);
 
 const data = new Data(knex);
